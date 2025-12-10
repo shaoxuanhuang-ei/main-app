@@ -5,9 +5,31 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>main-app</title>
+    <script type="module" src="/src/main.js">
+    </script>
+    <script>
+      // 放在 head 中提前注册事件
+      window.addEventListener('pageShow', (event) => { // 修复拼写
+        console.log('from index');
+        requestAnimationFrame(() => {
+          console.log('test===========：', performance.now() - event.timeStamp); // 修复属性名
+        });
+      }, true);
+
+      // // 原代码 遍历load和DOMContentLoaded？
+      // // load：事件都加载完了，DOMContentLoaded：dom结构加载完了，事件还没注册完成
+      // window.addEventListener('pageShow', (event) => { // 修复拼写
+      //   requestAnimationFrame(() => {
+      //     ['load', 'DOMContentLoaded'].forEach((type) => {
+      //       console.log('test===========：', performance.now() - event.timeStamp);
+      //     })
+      //   });
+      // }, true);
+    </script>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <div id="app">
+      
+    </div>
   </body>
 </html>

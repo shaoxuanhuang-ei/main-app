@@ -1,48 +1,47 @@
 <template>
-  <div id="app">
-   <nav class="navbar">
-      <h1>主应用(Vue 3)</h1>
-      <ul>
-        <li><router-link to="/">首页</router-link></li>
-        <li><router-link to="/react-app">React子应用</router-link></li>
-      </ul>
-   </nav>
-   <main>
-    <!-- 主应用自身的路由视图（如首页内容） -->
-    <router-view />
-    
+   <div class="main-app">
+    <!-- 主应用导航栏：切换主应用页面/激活子应用 -->
+    <nav class="main-nav">
+      <router-link to="/">主应用首页</router-link>
+      <router-link to="/vue-app">Vue 子应用</router-link> <!-- 激活 Vue 子应用 -->
+      <router-link to="/react-app">React 子应用</router-link> <!-- 激活 React 子应用 -->
+    </nav>
+
+    <!-- 主应用自身路由视图 -->
+    <div class="main-content">
+      <router-view />
+    </div>
+
     <!-- 子应用挂载容器：qiankun 会将子应用渲染到这里 -->
-    <div id="micro-app-container"></div>
-   </main>
+    <div id="micro-app-container" class="micro-container"></div>
   </div>
 </template>
 
-<style>
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #333;
-  color: white;
+<style lang="less" scoped>
+.main-app {
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
-
-.navbar ul {
-  display: flex;
-  list-style: none;
-  gap: 1rem;
+.main-nav {
+  margin-bottom: 20px;
+  a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    &.router-link-active {
+      color: #42b983; // Vue Router 激活态颜色
+    }
+  }
 }
-
-.navbar a {
-  color: white;
-  text-decoration: none;
+.main-content {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #eee;
 }
-
-.navbar a:hover {
-  text-decoration: underline;
-}
-
-main {
-  padding: 2rem;
+.micro-container {
+  padding: 20px;
+  border: 1px solid #eee;
 }
 </style>
