@@ -1,3 +1,15 @@
+import { lazyReportBatch } from "../report"
+export default function observerEntries() {
+  if (document.readyState === 'complete') {
+    observerEvent()
+  } else {
+    const onLoad = () => {
+      observerEvent()
+      window.removeEventListener('load', onLoad, true)
+    }
+    window.addEventListener('load', onLoad, true)
+  }
+}
 export function observerEvent() {
   const entryHandler = (list) => {
     const data = list.getEntries()
@@ -22,9 +34,9 @@ export function observerEvent() {
         resourceSize: entry.decodedBodySize, // 资源解压后大小
         startTime: performance.now()
       }
-      console.log(entry);
-      console.log('上报资源数据：', reportData);
-          
+      // console.log(entry);
+      // console.log('上报资源数据：', reportData);
+      lazyReportBatch(reportData)
     }
   }
 

@@ -25,6 +25,7 @@
 // // }
 
 // 优化版本
+import { lazyReportBatch } from "../report"
 export default function observerLCP() {
     // 兼容处理：判断浏览器是否支持
     if (!('PerformanceObserver' in window) || !('LargestContentfulPaint' in window)) {
@@ -78,7 +79,8 @@ export default function observerLCP() {
         };
 
         // 这里可以替换为你的上报逻辑（如接口上报）
-        console.log('上报LCP数据:', reportData);
+        // console.log('上报LCP数据:', reportData);
+        lazyReportBatch(reportData)
     };
 
     // 创建观察者

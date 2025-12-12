@@ -1,8 +1,12 @@
 import { createApp } from 'vue'
+import monitor from './webEyeSDK'
+
 import { registerMicroApps, start, initGlobalState } from 'qiankun'
 import './style.css'
 import App from './App.vue'
 import router from './router'
+import i18nPlugin from './plugins/i18n'
+console.log(i18nPlugin,'i18nPlugin');
 
 import {
   onCLS,
@@ -57,7 +61,21 @@ start({
     alert(`子应用加载失败，请刷新重试\n错误信息：${err.message}`);
   }
 })
-createApp(App)
-  .use(router)
-  .provide('globalActions', globalActions) //提供全局状态
-  .mount('#app')
+
+const app = createApp(App)
+app.use(router)
+app.provide('globalActions', globalActions) //提供全局状态
+app.use(i18nPlugin, {
+  greeting: {
+    hello: 'Bonjour'
+  }
+})
+
+app.config.errorHandler = (err, vm) => {
+  console.error(err, 'error')
+}
+
+app.use(monitor, {
+  url: 'http://localhost:9800/reportData'
+})
+app.mount('#app')

@@ -9,21 +9,21 @@
   <input type="text" placeholder="输入测试 INP" />
 </template>
 <script>
-window.addEventListener('error', args => {
-  console.log('error event:', args);
-  return true
-}, true) // 捕获阶段处理错误
+// window.addEventListener('error', args => {
+//   console.log('error event:', args);
+//   return true
+// }, true) // 捕获阶段处理错误
 
-window.addEventListener('unhandledrejection', e => {
-  throw e.reason
-})
+// window.addEventListener('unhandledrejection', e => {
+//   throw e.reason
+// })
 
-const asyncFunc = () => new Promise(resolve => {
-  error // 未定义变量，模拟错误
-})
-setTimeout(async() => {
-  await asyncFunc()
-})
+// const asyncFunc = () => new Promise(resolve => {
+//   error // 未定义变量，模拟错误
+// })
+// setTimeout(async() => {
+//   await asyncFunc()
+// })
 
 // // fixme 不生效？
 // window.addEventListener('pageShow', (event) => {

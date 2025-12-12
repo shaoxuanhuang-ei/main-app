@@ -10,6 +10,7 @@
     <!-- 主应用自身路由视图 -->
     <div class="main-content">
       <router-view />
+      <h1>{{ $translate('greeting.hello') }}</h1>
     </div>
 
     <!-- 子应用挂载容器：qiankun 会将子应用渲染到这里 -->

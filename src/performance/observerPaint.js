@@ -1,3 +1,4 @@
+import { lazyReportBatch } from "../report"
 export default function observerPaint() {
     const entryHandler = (list) => {
         for (const entry of list.getEntries()) {
@@ -11,7 +12,8 @@ export default function observerPaint() {
                     subType: entry.name,
                     pageUrl: window.location.href
                 }          
-                console.log('上报FP数据：', reportData);
+                // console.log('上报FP数据：', reportData);
+                lazyReportBatch(reportData)
             }
         }
     }

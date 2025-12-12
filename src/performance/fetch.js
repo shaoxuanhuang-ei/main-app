@@ -1,3 +1,4 @@
+import { lazyReportBatch } from "../report"
 const originalFetch = window.fetch
 window.fetch = function newFetch(url, config) {
   const startTime = Date.now()
@@ -13,9 +14,10 @@ window.fetch = function newFetch(url, config) {
     reportData.endTime = endTime
     reportData.duration = endTime - startTime
     const data = res.clone()
-    reportData.status = res.status
-    reportData.success = res.ok
+    reportData.status = data.status
+    reportData.success = data.ok
     // todo 上报数据
+    lazyReportBatch(reportData)
     return res
   }).catch((err) => {
     const endTime = Date.now()
@@ -24,6 +26,7 @@ window.fetch = function newFetch(url, config) {
     reportData.status = 0
     reportData.success = false
     // todo 上报数据
+    lazyReportBatch(reportData)
   })
 }
 

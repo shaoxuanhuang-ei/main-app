@@ -1,3 +1,4 @@
+import { lazyReportBatch } from '../report'
 export default function error() {
   // 捕获资源加载失败的错误：js，css，img
   window.addEventListener('error', function(e) {
@@ -15,6 +16,7 @@ export default function error() {
         paths: e.path // 资源具体路径
       }
       // todo 发送错误信息
+      lazyReportBatch(reportData)
     }
   }, true)
 
@@ -32,6 +34,7 @@ export default function error() {
       startTime: performance.now()
     }
     // todo 发送错误信息
+    lazyReportBatch(reportData)
   }
 
   // 捕获promise错误 async await
@@ -44,5 +47,6 @@ export default function error() {
       startTime: e.timeStamp // performance.now()
     }
     // todo 发送错误信息
-  })
+    lazyReportBatch(reportData)
+  }, true)
 }
