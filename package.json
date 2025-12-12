@@ -1,11 +1,28 @@
 {
-  "name": "main-app",
-  "private": true,
-  "version": "0.0.0",
+  "name": "eye-sdk-main-app",
+  "version": "1.0.0",
+  "description": "前端监控平台",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/shaoxuanhuang-ei/main-app"
+  },
+  "author": "xiuenda",
+  "type": "commonjs",
+  "main": "dist/monitor.cjs.js",
+  "module": "dist/monitor.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/monitor.esm.js",
+      "require": "./dist/monitor.cjs.js",
+      "default": "./dist/monitor.cjs.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "rollup -c rollup/build.js",
-    "preview": "vite preview"
+    "build": "rollup -c rollup/build.js"
   },
   "dependencies": {
     "@babel/preset-env": "^7.28.5",
@@ -20,8 +37,7 @@
     "typescript": "^5.9.3",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1",
-    "web-vitals": "^5.1.0",
-    "xmlhttprequest": "^1.8.0"
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
