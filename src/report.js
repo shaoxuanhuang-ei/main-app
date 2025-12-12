@@ -2,8 +2,8 @@ import config from './config';
 import { generateUniqueId } from './utils';
 import { addCache, getCache, clearCache } from './cache';
 export const originalProto = XMLHttpRequest.prototype;
-export const originalOpen = XMLHttpRequest.prototype.open;
-export const originalSend = XMLHttpRequest.prototype.send;
+export const originalOpen = originalProto.open;
+export const originalSend = originalProto.send;
 
 export function isSupportSendBeacon() {
   return 'sendBeacon' in navigator

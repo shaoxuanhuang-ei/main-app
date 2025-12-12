@@ -1,5 +1,4 @@
 import { lazyReportBatch } from "../report"
-import { XMLHttpRequest } from 'xmlhttprequest' //fixme
 // 重写ajax:ajax底层是xhr实现的，拿到xhr的原型，重写open和send方法
 export const originalProto = XMLHttpRequest.prototype
 export const originalSend = originalProto.send // 保存原生方法，以防后续要用

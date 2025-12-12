@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>错误收集demo</title>
+  <script src="../../dist/monitor.js"></script>
+  <script>
+    console.log(monitor,'monitor');
+    
+    monitor.init({
+      url: 'http://localhost:9800/reportData',
+      batchSize: 20,
+      isImage: false,
+    });
+  </script>
+</head>
+<body>
+  <img src="http://toutiao.com/x.png" alt="" />
+  <img src="http://toutiao.com/x2.png" alt="" />
+  <img src="http://toutiao.com/x3.png" alt="" />
+  <script>
+    function test(){
+      return Promise.reject(new Error('test error'));
+    }
+
+    function test2(){
+      return Promise.reject(Error("async"))
+    }
+
+    test()
+    test2()
+
+    throw Error("test")
+
+    let abc = 2
+    abc()
+  </script>
+</body>
+</html>

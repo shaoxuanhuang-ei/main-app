@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>行为收集demo</title>
+  <script src="../../dist/monitor.js"></script>
+  <script>
+    monitor.init({
+      url: 'http://localhost:9800/reportData',
+      batchSize: 10,
+      isImage: false,
+    });
+  </script>
+</head>
+<body>
+  <button>test</button>
+</body>
+</html>

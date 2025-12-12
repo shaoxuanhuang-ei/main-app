@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>performance收集</title>
+    <!-- 引入 Element Plus 样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        #app {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #409EFF 0%, #67C23A 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 500px;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #f5f7fa;
+            padding: 20px;
+            border-right: 1px solid #e4e7ed;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #ebeef5;
+        }
+        
+        .card h3 {
+            color: #409EFF;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ebeef5;
+            padding-bottom: 10px;
+        }
+        
+        .user-list {
+            margin-top: 20px;
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .user-item:last-child {
+            border-bottom: none;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #409EFF;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #409EFF;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #909399;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f5f7fa;
+            color: #909399;
+            border-top: 1px solid #e4e7ed;
+        }
+        
+        .demo-row {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script src="../../dist/monitor.js"></script>
+    <script>
+      monitor.init({
+        url: 'http://localhost:9800/reportData',
+        batchSize: 10,
+        isImage: false,
+      });
+    </script>
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <h1>Vue 3 + Element Plus CDN 示例</h1>
+            <p>通过 CDN 引入 Vue 3 和 Element Plus 构建的应用界面</p>
+        </div>
+        
+        <div class="container">
+            <div class="sidebar">
+                <el-menu default-active="1" class="el-menu-vertical-demo">
+                    <el-menu-item index="1">
+                        <el-icon><icon-menu /></el-icon>
+                        <span>控制台</span>
+                    </el-menu-item>
+                    <el-menu-item index="2">
+                        <el-icon><document /></el-icon>
+                        <span>用户管理</span>
+                    </el-menu-item>
+                    <el-menu-item index="3">
+                        <el-icon><setting /></el-icon>
+                        <span>系统设置</span>
+                    </el-menu-item>
+                    <el-menu-item index="4">
+                        <el-icon><data-analysis /></el-icon>
+                        <span>数据分析</span>
+                    </el-menu-item>
+                </el-menu>
+            </div>
+            
+            <div class="main-content">
+                <div class="card">
+                    <h3>系统概览</h3>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value">1,254</div>
+                            <div class="stat-label">用户总数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">86</div>
+                            <div class="stat-label">今日新增</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">活跃度</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">待处理</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>表单示例</h3>
+                    <el-form :model="form" label-width="120px">
+                        <el-form-item label="用户名">
+                            <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
+                        </el-form-item>
+                        <el-form-item label="邮箱">
+                            <el-input v-model="form.email" placeholder="请输入邮箱"></el-input>
+                        </el-form-item>
+                        <el-form-item label="状态">
+                            <el-select v-model="form.status" placeholder="请选择状态">
+                                <el-option label="活跃" value="active"></el-option>
+                                <el-option label="非活跃" value="inactive"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="备注">
+                            <el-input type="textarea" v-model="form.desc" placeholder="请输入备注"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="onSubmit">提交</el-button>
+                            <el-button>取消</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入 Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- 引入 Element Plus -->
+    <script src="https://unpkg.com/element-plus/dist/index.full.js"></script>
+    
+    <!-- 引入 Element Plus 图标 -->
+    <script src="https://unpkg.com/@element-plus/icons-vue/dist/index.iife.min.js"></script>
+    
+    <script>
+        const { createApp, ref, computed } = Vue;
+        
+        // 创建 Vue 应用
+        const app = createApp({
+            setup() {
+                // 搜索框数据
+                const search = ref('');
+                
+                // 表单数据
+                const form = ref({
+                    name: '',
+                    email: '',
+                    status: '',
+                    desc: ''
+                });
+                
+                // 用户数据
+                const users = ref([
+                    { id: 1, name: '张三', email: 'zhangsan@example.com', status: 'active' },
+                    { id: 2, name: '李四', email: 'lisi@example.com', status: 'active' },
+                    { id: 3, name: '王五', email: 'wangwu@example.com', status: 'inactive' },
+                    { id: 4, name: '赵六', email: 'zhaoliu@example.com', status: 'active' },
+                    { id: 5, name: '钱七', email: 'qianqi@example.com', status: 'inactive' }
+                ]);
+                
+                // 过滤用户列表
+                const filteredUsers = computed(() => {
+                    if (!search.value) {
+                        return users.value;
+                    }
+                    return users.value.filter(user => 
+                        user.name.toLowerCase().includes(search.value.toLowerCase()) ||
+                        user.email.toLowerCase().includes(search.value.toLowerCase())
+                    );
+                });
+                
+                // 提交表单
+                const onSubmit = () => {
+                    ElMessage.success('表单提交成功！');
+                    console.log('表单数据:', form.value);
+                };
+                
+                return {
+                    search,
+                    form,
+                    users,
+                    filteredUsers,
+                    onSubmit
+                };
+            }
+        });
+        
+        // 使用 Element Plus
+        app.use(ElementPlus);
+        
+        // 注册图标组件
+        const {
+            Menu,
+            Document,
+            Setting,
+            DataAnalysis,
+            Search,
+            Plus,
+            Edit,
+            Delete
+        } = ElementPlusIconsVue;
+        
+        app.component('icon-menu', Menu);
+        app.component('document', Document);
+        app.component('setting', Setting);
+        app.component('data-analysis', DataAnalysis);
+        app.component('search', Search);
+        app.component('plus', Plus);
+        app.component('edit', Edit);
+        app.component('delete', Delete);
+        
+        // 挂载应用
+        app.mount('#app');
+    </script>
+
+  
+</body>
+</html>
