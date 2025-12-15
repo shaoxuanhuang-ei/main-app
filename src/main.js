@@ -6,7 +6,7 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import i18nPlugin from './plugins/i18n'
-console.log(i18nPlugin,'i18nPlugin');
+import { createPinia } from 'pinia'
 
 import {
   onCLS,
@@ -65,6 +65,7 @@ start({
 const app = createApp(App)
 app.use(router)
 app.provide('globalActions', globalActions) //提供全局状态
+app.use(createPinia)
 app.use(i18nPlugin, {
   greeting: {
     hello: 'Bonjour'
@@ -79,3 +80,7 @@ app.use(monitor, {
   url: 'http://localhost:9800/reportData'
 })
 app.mount('#app')
+
+// import { useEventStore } from './store/eventStore';
+// const eventStore = useEventStore();
+// eventStore.startRecording()
